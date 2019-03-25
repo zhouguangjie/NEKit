@@ -4,4 +4,4 @@ github "lexrus/MMDB-Swift" "0.2.9"
 github "zhuhaow/Sodium-framework" "v1.0.10.1"
 github "behrang/YamlSwift" "3.4.3"
 github "zhuhaow/tun2socks" ~> 0.6.0
-github "jzau/Resolver" "master"
+github "jzau/Resolver" "1b2bea4d09a5d7120e1620c6cc1029663d0cd6af"
