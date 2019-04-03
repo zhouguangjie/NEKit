@@ -34,13 +34,13 @@ open class CCCrypto: StreamCryptoProtocol {
 
     public init(operation: CryptoOperation, mode: Mode, algorithm: Algorithm, initialVector: Data?, key: Data) {
         let cryptor = UnsafeMutablePointer<CCCryptorRef?>.allocate(capacity: 1)
-        _ = key.withUnsafeRawPointer { k in
+        _ = key.withUnsafeBytes { k in
             if let initialVector = initialVector {
-                _ = initialVector.withUnsafeRawPointer { iv in
-                    CCCryptorCreateWithMode(operation.toCCOperation(), mode.toCCMode(), algorithm.toCCAlgorithm(), CCPadding(ccNoPadding), iv, k, key.count, nil, 0, 0, 0, cryptor)
+                _ = initialVector.withUnsafeBytes { iv in
+                    CCCryptorCreateWithMode(operation.toCCOperation(), mode.toCCMode(), algorithm.toCCAlgorithm(), CCPadding(ccNoPadding), iv.baseAddress!, k.baseAddress!, key.count, nil, 0, 0, 0, cryptor)
                 }
             } else {
-                CCCryptorCreateWithMode(operation.toCCOperation(), mode.toCCMode(), algorithm.toCCAlgorithm(), CCPadding(ccNoPadding), nil, k, key.count, nil, 0, 0, 0, cryptor)
+                CCCryptorCreateWithMode(operation.toCCOperation(), mode.toCCMode(), algorithm.toCCAlgorithm(), CCPadding(ccNoPadding), nil, k.baseAddress!, key.count, nil, 0, 0, 0, cryptor)
             }
         }
         self.cryptor = cryptor.pointee!
@@ -54,7 +54,11 @@ open class CCCrypto: StreamCryptoProtocol {
         }
         
         _ = data.withUnsafeMutableBytes {
+<<<<<<< HEAD
             CCCryptorUpdate(self.cryptor, $0, count, $0, count, nil)
+=======
+            CCCryptorUpdate(cryptor, $0.baseAddress!, count, $0.baseAddress!, count, nil)
+>>>>>>> zhuhaow/master
         }
     }
 
