@@ -54,11 +54,7 @@ open class CCCrypto: StreamCryptoProtocol {
         }
         
         _ = data.withUnsafeMutableBytes {
-<<<<<<< HEAD
-            CCCryptorUpdate(self.cryptor, $0, count, $0, count, nil)
-=======
             CCCryptorUpdate(cryptor, $0.baseAddress!, count, $0.baseAddress!, count, nil)
->>>>>>> zhuhaow/master
         }
     }
 
